@@ -1,13 +1,13 @@
 import { GoogleGenAI, Modality } from "@google/genai";
 
 export async function generateSpeech(text: string): Promise<string> {
-    if (!process.env.API_KEY) {
-        console.warn("API_KEY not set for audio generation. This feature will not work.");
+    if (!process.env.GEMINI_API_KEY) {
+        console.warn("GEMINI_API_KEY not set for audio generation. This feature will not work.");
         // To allow UI testing without an API key, we can return a silent audio clip.
         // This is a base64 encoded 1-second silent WAV file.
         return "UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAAABkYXRhAAAAAA==";
     }
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
     const response = await ai.models.generateContent({
         model: "gemini-2.5-flash-preview-tts",
         contents: [{ parts: [{ text: text }] }],
